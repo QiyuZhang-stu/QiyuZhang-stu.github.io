@@ -26,10 +26,10 @@ search: true
 
 # Build settings
 markdown: kramdown
-kramdown:
-  input: GFM
-  math_engine: mathjax
-  syntax_highlighter: rouge
+# kramdown:
+#   input: GFM
+#   math_engine: mathjax
+#   syntax_highlighter: rouge
   # auto_ids: true       # 可选：为标题生成锚点
   # toc_levels: 1..3     # 可选：目录层级remote_theme: mmistakes/minimal-mistakes
 # Outputting
