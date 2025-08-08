@@ -89,10 +89,27 @@ b.遍历策略
   - DFS
   ```cpp
   void DFS_pre(int node,const vector<int>& l,const vector<int>& r){
-    if(node==0) return;
-    cout<<node<<" ";
-    DFS_pre(l[node],l,r);
-    DFS_pre(r[node],l,r);
+      if(node==0) return;
+      cout<<node<<" ";
+      DFS_pre(l[node],l,r);
+      DFS_pre(r[node],l,r);
   }
   ```
+  ```cpp
+  void DFS_in(int node,const vector<int>& l,const vector<int>& r){
+      if(node==0) return;
+      DFS_in(l[node],l,r);
+      cout<<node<<" ";
+      DFS_in(r[node],l,r);
+  }
+  ```
+  ```cpp
+  void DFS_post(int node,const vector<int>& l,vector<int>& r){
+      if(node==0) return;
+      DFS_post(l[node],l,r);
+      DFS_post(r[node],l,r);
+      cout<<node<<" ";
+  }
+  ```
+
   
