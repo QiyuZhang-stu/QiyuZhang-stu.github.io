@@ -56,3 +56,42 @@ tags:
 4 3 2 1 6 5 7
 3 4 2 5 6 7 1
 ```
+
+
+解：
+a.首先进行前期处理
+```cpp
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+int main(){
+    int n;
+    vector<int> l;
+    vector<int> r;
+    cin >> n;
+    l.push_back(0);
+    r.push_back(0);
+    for(int i=1;i<=n;i++){
+        int x,y;
+        cin>>x>>y;
+        l.push_back(x);
+        r.push_back(y);
+    }
+
+    return 0;
+}
+```
+b.遍历策略
+`U+2460`搜索
+  - DFS
+  ```cpp
+  void DFS_pre(int node,const vector<int>& l,const vector<int>& r){
+    if(node==0) return;
+    cout<<node<<" ";
+    DFS_pre(l[node],l,r);
+    DFS_pre(r[node],l,r);
+  }
+  ```
+  
