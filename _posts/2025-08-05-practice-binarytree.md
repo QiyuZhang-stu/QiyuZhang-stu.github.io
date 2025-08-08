@@ -59,6 +59,7 @@ tags:
 
 
 解：
+
 a.首先进行前期处理
 ```cpp
 #include<iostream>
@@ -84,7 +85,7 @@ int main(){
 }
 ```
 b.遍历策略
-`U+2460`搜索
+- 搜索
   - DFS
   ```cpp
   void DFS_pre(int node,const vector<int>& l,const vector<int>& r){
