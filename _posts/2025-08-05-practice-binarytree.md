@@ -85,7 +85,7 @@ int main(){
 }
 ```
 b.遍历策略
-- 搜索
+- 递归搜索
   - DFS
   ```cpp
   void DFS_pre(int node,const vector<int>& l,const vector<int>& r){
@@ -109,6 +109,63 @@ b.遍历策略
       DFS_post(l[node],l,r);
       DFS_post(r[node],l,r);
       cout<<node<<" ";
+  }
+  ```
+- 非递归（用栈模拟）
+  ```cpp
+  void WR_pre(int node,const vector<int>& l, const vector<int>& r){
+      stack<int> s;
+      s.push(node);
+      while(!s.empty()) {
+          int current = s.top();
+          s.pop();
+          cout << current << " ";
+          if (r[current] != 0) {
+              s.push(r[current]);
+          }
+          if (l[current] != 0) {
+              s.push(l[current]);
+          }
+      }
+  }
+  ```
+  ```cpp
+  void WR_in(int node,const vector<int>& l, const vector<int>& r) {
+      stack<int> s;
+      int current = node;
+      while (current != 0 || !s.empty()) {
+          while (current != 0) {
+              s.push(current);
+              current = l[current];
+          }
+          current = s.top();
+          s.pop();
+          cout << current << " ";
+          current = r[current];
+      }
+  }
+  ```
+  ```cpp
+  void WR_post(int node,const vector<int>& l, const vector<int>& r) {
+      stack<int> s;
+      int current = node;
+      int lastVisited = 0;
+      while(current|| !s.empty()) {
+          while(current) {
+              s.push(current);
+              current = l[current];
+          }
+          current = s.top();
+          if(r[current] == 0 || r[current] == lastVisited) {
+              cout << current << " ";
+              s.pop();
+              lastVisited = current; 
+              current = 0; 
+          } 
+          else {
+              current = r[current];
+          }
+      }   
   }
   ```
 
