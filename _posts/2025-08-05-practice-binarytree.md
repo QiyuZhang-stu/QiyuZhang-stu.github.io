@@ -168,5 +168,115 @@ b.遍历策略
       }   
   }
   ```
+1.
+# 0510 由中根序列和后根序列重建二叉树
+
+## 题目描述
+
+我们知道如何按照三种深度优先次序来周游一棵二叉树，来得到中根序列、前根序列和后根序列。反过来，如果给定二叉树的中根序列和后根序列，或者给定中根序列和前根序列，可以重建一二叉树。本题输入一棵二叉树的中根序列和后根序列，要求在内存中重建二叉树，最后输出这棵二叉树的前根序列。
+
+## 输入格式
+
+两行。第一行是二叉树的中根序列，第二行是后根序列。每个数字表示的结点之间用空格隔开。结点数字范围0～65535。暂不必考虑不合理的输入数据。
+
+## 输出格式
+
+一行。由输入中的中根序列和后根序列重建的二叉树的前根序列。每个数字表示的结点之间用空格隔开。
+
+## 输入输出样例 #1
+
+### 输入 #1
+
+```
+9 5 32 67
+9 32 67 5
+```
+
+### 输出 #1
+
+```
+5 9 67 32
+```
+
+
+解：
+
+法一：
+
+a.全局初始化
+```cpp
+#include<iostream>
+#include<vector>
+#include<sstream>
+#include<string>
+
+using namespace std;
+
+vector<int> in;
+vector<int> post;
+vector<int> pre;
+vector<int> index;
+vector<int> l;
+vector<int> r;
+
+int search(int x) {
+	for (int i = 0; i < index.size(); i++) {
+		if (index[i] == x) return i;
+	}
+	return -1;
+}
+
+int main() {
+	input();
+	build(0, in.size() - 1, 0, post.size() - 1);
+	for (int i = 0; i < pre.size(); i++) {
+		if (i > 0) cout << " ";
+		cout << pre[i];
+	}
+	cout << endl;
+	return 0;
+}
+```
+b.输入处理
+```cpp
+void input() {
+	string line;
+	getline(cin, line);
+	stringstream ss(line);
+	int num;
+	while (ss >> num) {
+		in.push_back(num);
+	}
+	getline(cin, line);
+	ss.clear();
+	ss.str(line);
+	while (ss >> num) {
+		post.push_back(num);
+		index.push_back(num);
+	}
+}
+```
+c.重建与前序遍历（惊艳🤩）
+```cpp
+void build(int in_start,int in_end,int post_start,int post_end) {
+	if (in_start > in_end || post_start > post_end) return;
+	int root_val = post[post_end];
+	pre.push_back(root_val);
+	int post_in = -1;
+	for(int i = in_start; i <= in_end; i++) {
+		if (in[i] == root_val) {
+			post_in = i;
+			break;
+		}
+	}
+	int left_size = post_in - in_start;
+	build(in_start, post_in - 1, post_start, post_start + left_size - 1);
+	build(post_in + 1, in_end, post_start + left_size, post_end - 1);
+}
+```
+
+法二：
+
+
 
   
