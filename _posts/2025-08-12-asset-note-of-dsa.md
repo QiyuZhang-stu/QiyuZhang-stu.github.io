@@ -9,4 +9,4 @@ tags:
 
 开源数据结构与算法A笔记如下（更新ing）🥰
 
-[点击下载 DSA 笔记](/pdfs/SSAnote.pdf)
+[点击下载 DSA 笔记](/_pdfs/SSAnote.pdf)
