@@ -13,7 +13,6 @@ tags:
 
 由于🐭🐭菜菜的，如有错误欢迎您联系我指正；如果对您有帮助，希望您给我点个star；富哥富姐的话欢迎投喂😋
 
-<img src="./assets/images/赞赏码.jpg" alt="" width="50%"> 
-
+![](./assets/images/赞赏码.jpg)
 
 
