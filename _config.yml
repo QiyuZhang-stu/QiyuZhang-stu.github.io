@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Qiyu Zhang's page
-email: zhangqiyu_0721@qq.com/2400013153@stu.pku.edu.cn
+email: zhangqiyu_0721@qq.com
 description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -37,6 +37,7 @@ timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 include:
   - _pages
+  - _pdfs
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
