@@ -44,6 +44,60 @@ tags:
 1 2 3 4 5
 ```
 
+
+解：
+
+```cpp
+#include<iostream>
+#include<vector>
+#include<queue>
+
+using namespace std;
+
+int n;
+vector<int> l,r,final,val;
+
+void input(){
+    l.push_back(-1);
+    r.push_back(-1);
+    val.push_back(-1);
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        int temp,L,R;
+        cin>>temp>>L>>R;
+        val.push_back(temp);
+        l.push_back(L);
+        r.push_back(R);
+    }
+}
+
+void BFS(int start){
+    queue<int> q;
+    q.push(start);
+    while(!q.empty()){
+        int cur=q.front();
+        q.pop();
+        final.push_back(val[cur]);
+        if(l[cur]!=-1){
+            q.push(l[cur]);
+        }
+        if(r[cur]!=-1){
+            q.push(r[cur]);
+        }
+    }
+}
+
+int main(){
+    input();
+    BFS(1);
+    for(int i=0;i<final.size();i++){
+        if(i>0) cout<<" ";
+        cout<<final[i];
+    }
+    return 0;
+}
+```
+
 二·经典例题
 
 1.
