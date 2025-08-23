@@ -98,6 +98,164 @@ int main(){
 }
 ```
 
+2.
+# 二叉搜索树的基本操作
+
+## 题目描述
+请你实现一个二叉搜索树（BST），支持以下四种操作：
+
+1. **建立**：给定一系列整数，依次插入到 BST 中，建立一棵二叉搜索树。
+2. **检索**：查询某个值是否存在于 BST 中。
+3. **插入**：将一个新的值插入 BST。
+4. **删除**：删除 BST 中的某个值（若不存在则忽略）。
+
+请在所有操作完成后，输出这棵 BST 的中序遍历结果。
+
+## 输入格式
+- 第一行：两个整数 `n m`，分别表示初始插入的元素数量和操作数量 (1 ≤ n, m ≤ 1000)。  
+- 第二行：`n` 个互不相同的整数，表示依次插入 BST 的结点值。  
+- 接下来 `m` 行，每行表示一次操作，格式如下：
+  - `Q x`：检索值 `x` 是否在 BST 中（输出 `Found` 或 `Not Found`）。  
+  - `I x`：向 BST 中插入值 `x`（若已存在则忽略）。  
+  - `D x`：从 BST 中删除值 `x`（若不存在则忽略）。  
+
+## 输出格式
+- 对于每个检索操作 `Q`，输出一行 `Found` 或 `Not Found`。  
+- 最后一行输出 BST 的中序遍历结果。
+
+## 输入样例
+
+```
+5 5
+4 2 6 1 3
+Q 3
+Q 5
+I 5
+D 2
+Q 2
+```
+
+## 输出样例
+
+```
+Found
+Not Found
+Not Found
+1 3 4 5 6
+```
+
+
+解：
+
+```cpp
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+struct Node{
+    int v;
+    Node* l;
+    Node* r;
+    Node(int x):v(x),l(NULL),r(NULL){}
+};
+
+Node* insertBST(Node* root,int x){
+    if(root==NULL) return new Node(x);
+    if(x<root->v) root->l=insertBST(root->l,x);
+    else if(x>root->v) root->r=insertBST(root->r,x);
+    return root;
+}
+
+bool searchBST(Node* root,int x){
+    if(root==NULL) return false;
+    if(root->v==x) return true;
+    else if(x<root->v) return searchBST(root->l,x);
+    else return searchBST(root->r, x);
+}
+
+Node* findmin(Node* root){
+    while(root->l!=NULL) root=root->l;
+    return root;
+}
+
+Node* deleteBST(Node* root,int x){
+    if(root==NULL) return NULL;
+    if(x<root->v){
+        root->l=deleteBST(root->l,x);
+    }
+    else if(x>root->v){
+        root->r=deleteBST(root->r,x);
+    }
+    else{
+        if(root->l==NULL&&root->r==NULL){
+            delete root;
+            return NULL;
+        }
+        else if(root->l==NULL){
+            Node* tmp=root->r;
+            delete root;
+            return tmp;
+        }
+        else if(root->r==NULL){
+            Node* tmp=root->l;
+            delete root;
+            return tmp;
+        }
+        else{
+            Node* successor=findmin(root->r);
+            root->v=successor->v;//用它右子树的最小结点（中序后继）替代它
+            root->r=deleteBST(root->r,successor->v);//再在右子树中删除这个后继结点
+        }
+    }
+    return root;
+}
+
+void inorder(Node* root,vector<int>& result){
+    if(root==NULL) return;
+    inorder(root->l,result);
+    result.push_back(root->v);
+    inorder(root->r,result);
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    Node* root=NULL;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        root=insertBST(root,x);
+    }
+    for(int i=0;i<m;i++){
+        char op;
+        int x;
+        cin>>op>>x;
+        if(op=='Q'){
+            if(searchBST(root,x)) cout<<"Found\n";
+            else cout<<"Not Found\n";
+        }
+        else if(op=='I'){
+            root=insertBST(root,x);
+        }
+        else if(op=='D'){
+            root=deleteBST(root,x);
+        }
+    }
+    vector<int> result;
+    inorder(root,result);
+    for(int i=0;i<result.size();i++){
+        if(i) cout<<" ";
+        cout<<result[i];
+    }
+    cout<<"\n";
+    return 0;
+}
+```
+
+3.
+
+
 二·经典例题
 
 1.
