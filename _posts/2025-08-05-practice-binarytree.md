@@ -306,14 +306,117 @@ DWN 2
 ```
 Found
 Found
-0 2 1 4 3
+0 2 1 3 4
 ```
 
 
 解：
 
 ```cpp
+#include<iostream>
+#include<vector>
 
+using namespace std;
+
+struct MinHeap{
+    vector<int> h;
+    MinHeap(){h.push_back(0);}
+    int size(){return h.size()-1;}
+    void swapNode(int i,int j){
+        int tmp=h[i];
+        h[i]=h[j];
+        h[j]=tmp;
+    }
+    void siftUp(int k){
+        while(k>1&&h[k]<h[k/2]){
+            swapNode(k,k/2);
+            k/=2;
+        }
+    }
+    void siftDown(int k){
+        int n=size();
+        while(2*k<=n){
+            int child=2*k;
+            if(child+1<=n&&h[child+1]<h[child]) child++;
+            if(h[k]<=h[child]) break;
+            swapNode(k,child);
+            k=child;
+        }
+    }
+    void insert(int x){
+        h.push_back(x);
+        siftUp(size());
+    }
+    void build(vector<int>& arr){
+        h={0};
+        for(int x:arr) h.push_back(x);
+        for(int i=size()/2;i>=1;i--){
+            siftDown(i);
+        }
+    }
+    bool search(int x){
+        for(int i=1;i<=size();i++){
+            if(h[i]==x) return true;
+        }
+        return false;
+    }
+    void remove(int x){
+        int n=size();
+        int idx=-1;
+        for(int i=1;i<=n;i++){
+            if(h[i]==x){
+                idx=i;
+                break;
+            }
+        }
+        if(idx==-1) return;
+        h[idx]=h[n];
+        h.pop_back();
+        if(idx<=size()){
+            siftUp(idx);
+            siftDown(idx);
+        }
+    }
+    void printHeap(){
+        for(int i=1;i<=size();i++){
+            if(i>1) cout<<" ";
+            cout<<h[i];
+        }
+        cout<<"\n";
+    }
+};
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<int> arr(n);
+    for(int i=0;i<n;i++) cin>>arr[i];
+    MinHeap heap;
+    heap.build(arr);
+    for (int i = 0; i < m; i++) {
+        string op;
+        int x;
+        cin >> op >> x;
+        if (op == "Q") { 
+            if (heap.search(x)) cout << "Found\n";
+            else cout << "Not Found\n";
+        } 
+        else if (op == "I") { 
+            heap.insert(x);
+        } 
+        else if (op == "D") { 
+            heap.remove(x);
+        } 
+        else if (op == "U") { 
+            if (x >= 1 && x <= heap.size()) heap.siftUp(x);
+        } 
+        else if (op == "DWN") { 
+            if (x >= 1 && x <= heap.size()) heap.siftDown(x);
+        }
+    }
+    heap.printHeap();
+    return 0;
+}
 ```
 
 二·经典例题
