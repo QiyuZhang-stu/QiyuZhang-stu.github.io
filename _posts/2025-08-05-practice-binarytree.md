@@ -832,6 +832,41 @@ $$L_i$$:根节点到第`i`个外部叶子节点的距离。
 
 解：
 
+```cpp
+#include<iostream>
+#include<vector>
+#include<queue>
+
+using namespace std;
+
+int main(){
+	int t;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		priority_queue<int,vector<int>,greater<int>> minHeap;
+		for(int i=0;i<n;i++){
+			int w;
+			cin>>w;
+			minHeap.push(w);
+		}
+		int totalWPL=0;
+		while(minHeap.size()>1){
+			int a=minHeap.top();
+			minHeap.pop();
+			int b=minHeap.top();
+			minHeap.pop();
+			int sum=a+b;
+			totalWPL+=sum;
+			minHeap.push(sum);
+		}
+		cout<<totalWPL<<endl;
+	}
+	return 0;
+}
+```
+【评】这里有个定理：哈夫曼树中最小带权路径长度（WPL）等于所有非叶子节点权值之和（数学归纳法易证），又等于每次合并后所得新权值之和
 
 
 
