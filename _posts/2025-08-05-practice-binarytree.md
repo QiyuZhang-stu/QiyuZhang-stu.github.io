@@ -485,6 +485,101 @@ Empty
 
 解：
 
+```cpp
+#include<iostream>
+#include<vector>
+
+using namespace std;
+
+class PriorityQueue{
+private:
+	vector<int> heap;
+
+	void siftUp(int x){
+		while(x>0){
+			int parent=(x-1)/2;
+			if(heap[x]>heap[parent]){
+				swap(heap[x],heap[parent]);
+				x=parent;
+			}
+			else{
+				break;
+			}
+		}
+	}
+
+	void siftDown(int x){
+		int n=heap.size();
+		while(x<n){
+			int l=2*x+1;
+			int r=2*x+2;
+			int largest=x;
+
+			if(l<n&&heap[l]>heap[largest])
+				largest=l;
+			if(r<n&&heap[r]>heap[largest])
+				largest=r;
+			if(largest!=x){
+				swap(heap[x],heap[largest]);
+				x=largest;
+			}
+			else{
+				break;
+			}
+		}
+	}
+
+public:
+	void push(int x){
+		heap.push_back(x);
+		siftUp(heap.size()-1);
+	}
+
+	void pop(){
+		if(heap.empty()) return;
+		swap(heap[0],heap.back());
+		heap.pop_back();
+		if(!heap.empty()) siftDown(0);
+	}
+
+	int top(){
+		return heap.empty()? -1:heap[0];
+	}
+
+	bool empty(){
+		return heap.empty();
+	}
+};
+
+int main(){
+	PriorityQueue pq;
+	int Q;
+	cin>>Q;
+	while(Q--){
+		int op,x;
+		cin>>op;
+		switch(op){
+			case 1:
+				cin>>x;
+				pq.push(x);
+				break;
+			case 2:
+				pq.pop();
+				break;
+			case 3:
+				if(pq.empty()){
+					cout<<"Empty"<<endl;
+				}
+				else{
+					cout<<pq.top()<<endl;
+				}
+				break;
+		}
+	}
+	return 0;
+}
+```
+
 
 二·经典例题
 
