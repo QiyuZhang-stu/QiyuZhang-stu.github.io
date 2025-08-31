@@ -14,7 +14,7 @@
         {%- if post.title -%}
         <h2 class="archive__item-title no_toc">
           {% if post.sticky %}
-            <span class="pinned-badge">📌置顶</span>
+            <span class="pinned-badge">📌Pinned</span>
           {% endif %}
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </h2>
