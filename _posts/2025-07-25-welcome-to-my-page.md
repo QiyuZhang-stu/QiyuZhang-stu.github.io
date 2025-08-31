@@ -6,6 +6,8 @@ categories:
 tags:
   - init
   - welcome
+sticky: true
+sticky_order: 1
 ---
 
 Welcome to Qiyu's page! It's a pleasure to meet you.

@@ -5,6 +5,8 @@ categories:
   - blog
 tags:
   - review
+sticky: true
+sticky_order: 3
 ---
 
 整整一年没看书了qwq，希望能重拾阅读的好习惯，打卡此blog来督促自己吧（也欢迎大家一起分享交流）
