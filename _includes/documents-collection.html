@@ -1,0 +1,40 @@
+{% comment %}
+  documents-collection.html
+  这是 Minimal Mistakes 主题里用来渲染文章集合的 include 文件。
+  我在标题前加了一个置顶标记（当 post.sticky 为 true 时）。
+{% endcomment %}
+
+{% assign entries_layout = include.type | default: 'list' %}
+
+<div class="entries-{{ entries_layout }}">
+  {% for post in include.entries %}
+    <div class="archive__item">
+      <div class="archive__item-body">
+
+        {%- if post.title -%}
+        <h2 class="archive__item-title no_toc">
+          {% if post.sticky %}
+            <span class="pinned-badge">📌置顶</span>
+          {% endif %}
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </h2>
+        {%- endif -%}
+
+        {%- if post.excerpt -%}
+          <div class="archive__item-excerpt">
+            {{ post.excerpt | markdownify | strip_html | truncate: 160 }}
+          </div>
+        {%- endif -%}
+
+        {%- if post.date -%}
+          <div class="archive__item-meta">
+            <span class="archive__item-date">
+              {{ post.date | date: "%Y-%m-%d" }}
+            </span>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  {% endfor %}
+</div>
