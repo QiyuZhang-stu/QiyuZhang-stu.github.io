@@ -1,0 +1,34 @@
+---
+layout: archive
+---
+
+{{ content }}
+
+<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
+
+{%- assign sticky_posts = site.posts | where: "sticky", true -%}
+
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
+
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="entries-{{ entries_layout }}">
+
+  {%- comment -%}
+  {%- endcomment -%}
+  {% if paginator and paginator.page == 1 %}
+    {% assign sticky_sorted = sticky_posts | sort: "sticky_order" %}
+    {% include documents-collection.html entries=sticky_sorted type=entries_layout %}
+  {% endif %}
+
+  {%- comment -%}
+  {%- endcomment -%}
+  {% assign normal_posts = posts | where_exp: "p", "p.sticky != true" %}
+  {% include documents-collection.html entries=normal_posts type=entries_layout %}
+
+</div>
+
+{% include paginator.html %}
