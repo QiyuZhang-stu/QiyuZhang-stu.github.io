@@ -15,6 +15,8 @@ sticky_order: 2
 
 [2024年期中试题](/_pdfs/SSA-midterm-examination.pdf)（排版加手敲花了我两个小时orz）
 
+[2024期中个人答案](/_pdfs/2024-DSA-期中-个人解答.pdf)（这个绘图花了我好久时间🥲）
+
 由于🐭🐭菜菜的，如有错误欢迎您联系我指正；如果对您有帮助，希望您给我点个star；富哥富姐的话欢迎投喂😋
 
 ![](/assets/images/赞赏码.jpg)
