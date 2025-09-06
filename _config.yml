@@ -66,8 +66,8 @@ author:
   bio    : "Still waters run deep."
   links:
     - label: "Website"
-      icon: "fas fa-fw fa-link"
-      url: "https://"
+      icon:  "fas fa-fw fa-globe"
+      url: "https://qiyuzhang-stu.github.io"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
       url: "https://twitter.com/"
@@ -116,3 +116,16 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+comments:
+  provider: "giscus"
+  giscus:
+    repo: "QiyuZhang-stu/QiyuZhang-stu.github.io"  # 你的博客仓库
+    repo_id: "R_kgDOPSl0vg"          # giscus.app 生成
+    category: "General"                           # 你在 discussions 里创建的分类名
+    category_id: "DIC_kwDOPSl0vs4CvCwv"  # giscus.app 生成
+    mapping: "pathname"                           # 建议用 pathname
+    reactions_enabled: "1"                        # 开启 GitHub 表情反应
+    emit_metadata: "0"
+    theme: "light"
+    lang: "zh-CN"
