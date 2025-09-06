@@ -8,6 +8,7 @@ tags:
   - welcome
 sticky: true
 sticky_order: 1
+comments: true
 ---
 
 Welcome to Qiyu's page! It's a pleasure to meet you.
