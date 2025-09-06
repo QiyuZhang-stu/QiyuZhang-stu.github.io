@@ -1,0 +1,33 @@
+<!-- _includes/custom/footer.html -->
+<script>
+(function () {
+  try {
+    var target = document.querySelector('#giscus-comments');
+    if (!target) return;
+
+    // 如果页面上已有我们自己插入的 giscus 脚本，避免重复插入
+    if (target.querySelector('script[data-repo="QiyuZhang-stu/QiyuZhang-stu.github.io"]')) return;
+
+    // 新建并插入 giscus script（使用你在 giscus.app 得到的确切值）
+    var s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.setAttribute('data-repo', 'QiyuZhang-stu/QiyuZhang-stu.github.io');
+    s.setAttribute('data-repo-id', 'R_kgDOPSl0vg');
+    s.setAttribute('data-category', 'General');
+    s.setAttribute('data-category-id', 'DIC_kwDOPSl0vs4CvCwv');
+    s.setAttribute('data-mapping', 'pathname');
+    s.setAttribute('data-strict', '0');
+    s.setAttribute('data-reactions-enabled', '1');
+    s.setAttribute('data-emit-metadata', '0');
+    s.setAttribute('data-input-position', 'top');
+    s.setAttribute('data-theme', 'preferred_color_scheme');
+    s.setAttribute('data-lang', 'zh-CN');
+    s.setAttribute('crossorigin', 'anonymous');
+    s.async = true;
+
+    target.appendChild(s);
+  } catch (e) {
+    console && console.error('giscus insert error', e);
+  }
+})();
+</script>
