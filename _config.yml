@@ -127,5 +127,5 @@ comments:
     mapping: "pathname"                           # 建议用 pathname
     reactions_enabled: "1"                        # 开启 GitHub 表情反应
     emit_metadata: "0"
-    theme: "light"
+    theme: "preferred_color_scheme"
     lang: "zh-CN"
