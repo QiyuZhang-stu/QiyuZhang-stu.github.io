@@ -1,149 +1,217 @@
-<div class="page__comments">
-  {% capture comments_label %}{{ site.data.ui-text[site.locale].comments_label | default: "Comments" }}{% endcapture %}
-  {% capture leave_label %}{{ site.data.ui-text[site.locale].comments_label | default: "Leave a Comment" }}{% endcapture %}
-
-  {%- comment -%}
-    1) 如果项目数据里有已有评论（例如使用 staticman 保存的在 site.data.comments），先渲染它们（防止被覆盖）。
-    2) 再根据 site.comments.provider 显示第三方评论控件 / 表单（utterances 脚本仅放在这里）。
-  {%- endcomment -%}
-
-  {% if site.data.comments and site.data.comments[page.slug] %}
-    <h4 class="page__comments-title">{{ comments_label }}</h4>
-    <div class="js-comments">
-      {% assign comments = site.data.comments[page.slug] %}
-
-      <!-- convert array-of-arrays to array-of-objects so we can sort by date -->
-      {% assign commentObjects = '' | split: '' %}
-      {% for comment in comments %}
-        {% assign commentObject = comment[1] %}
-        {% assign commentObjects = commentObjects | push: commentObject %}
-      {% endfor %}
-      {% assign comments = commentObjects | sort: "date" %}
-
-      {% for comment in comments %}
-        {% assign email = comment.email %}
-        {% assign name = comment.name %}
-        {% assign url = comment.url %}
-        {% assign date = comment.date %}
-        {% assign message = comment.message %}
-        {% include comment.html index=forloop.index email=email name=name url=url date=date message=message %}
-      {% endfor %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f6f8fa;
+            color: #24292e;
+            line-height: 1.5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .social-share {
+            display: flex;
+            padding: 16px;
+            border-bottom: 1px solid #eaecef;
+            gap: 8px;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        
+        .social-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .social-btn.x { background-color: #000; }
+        .social-btn.fb { background-color: #1877F2; }
+        .social-btn.li { background-color: #0A66C2; }
+        .social-btn.bs { background-color: #0085FF; }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px;
+            border-bottom: 1px solid #eaecef;
+        }
+        
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #586069;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        
+        .nav-btn:hover {
+            color: #0366d6;
+        }
+        
+        .comments-header {
+            padding: 16px;
+            border-bottom: 1px solid #eaecef;
+            font-size: 14px;
+            color: #586069;
+        }
+        
+        .comments-container {
+            padding: 16px;
+        }
+        
+        .comments-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #24292e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .auth-prompt {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #eaecef;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        
+        .auth-prompt p {
+            margin-bottom: 16px;
+            color: #586069;
+        }
+        
+        .github-btn {
+            background-color: #2ea44f;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .github-btn:hover {
+            background-color: #2c974b;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eaecef;
+            margin-bottom: 16px;
+        }
+        
+        .tab {
+            padding: 8px 16px;
+            background: none;
+            border: none;
+            color: #586069;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .tab.active {
+            font-weight: 600;
+            color: #24292e;
+            border-bottom: 2px solid #f9826c;
+        }
+        
+        .comment-input {
+            min-height: 200px;
+            width: 100%;
+            border: 1px solid #eaecef;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+        
+        .markdown-note {
+            font-size: 12px;
+            color: #586069;
+            margin-bottom: 16px;
+        }
+        
+        .utterances {
+            margin-top: 20px;
+            border-top: 1px solid #eaecef;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="social-share">
+            <div class="social-btn x">X</div>
+            <div class="social-btn fb">Facebook</div>
+            <div class="social-btn li">LinkedIn</div>
+            <div class="social-btn bs">Bluesky</div>
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn">Previous</button>
+            <button class="nav-btn">Next</button>
+        </div>
+        
+        <div class="comments-header">
+            0 Comments - powered by utteranc.es
+        </div>
+        
+        <div class="comments-container">
+            <div class="tabs">
+                <button class="tab active">Write</button>
+                <button class="tab">Preview</button>
+            </div>
+            
+            <textarea class="comment-input" placeholder="Leave a comment"></textarea>
+            
+            <div class="markdown-note">
+                M+ Styling with Markdown is supported
+            </div>
+            
+            <!-- COMMENTS标题和评论区 -->
+            <div class="comments-title">COMMENTS</div>
+            
+            <div class="auth-prompt">
+                <p>Sign in to comment</p>
+                <button class="github-btn">Sign in with GitHub</button>
+            </div>
+            
+            <div class="utterances">
+                <!-- Utterances评论插件将在这里加载 -->
+            </div>
+        </div>
     </div>
-  {% endif %}
-
-  {% case site.comments.provider %}
-    {% when "discourse" %}
-      <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comment_form_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-      <section id="discourse-comments"></section>
-
-    {% when "disqus" %}
-      <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comment_form_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-      <section id="disqus_thread"></section>
-
-    {% when "facebook" %}
-      <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comment_form_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-      <section class="fb-comments" data-href="{{ page.url | absolute_url }}" data-mobile="true" data-num-posts="{{ site.comments.facebook.num_posts | default: 5 }}" data-width="100%" data-colorscheme="{{ site.comments.facebook.colorscheme | default: 'light' }}"></section>
-
-    {% when "staticman_v2" %}
-      <!-- If you already displayed existing comments above, show a "Leave a Comment" heading for the form -->
-      <div class="page__comments-form">
-        <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comments_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-        {% if site.repository and site.comments.staticman.branch %}
-          <p class="small">{{ site.data.ui-text[site.locale].comment_form_info | default: "Your email address will not be published. Required fields are marked" }} <span class="required">*</span></p>
-          <form id="new_comment" class="page__comments-form js-form form" method="post" action="{{ site.comments.staticman.endpoint }}{{ site.repository }}/{{ site.comments.staticman.branch }}/comments">
-            <div class="form__spinner">
-              <i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>
-              <span class="sr-only">{{ site.data.ui-text[site.locale].loading_label | default: "Loading..." }}</span>
-            </div>
-
-            <div class="form-group">
-              <label for="comment-form-message">{{ site.data.ui-text[site.locale].comment_form_comment_label | default: "Comment" }} <small class="required">*</small></label>
-              <textarea type="text" rows="3" id="comment-form-message" name="fields[message]" tabindex="1"></textarea>
-              <div class="small help-block"><a href="https://daringfireball.net/projects/markdown/">{{ site.data.ui-text[site.locale].comment_form_md_info | default: "Markdown is supported." }}</a></div>
-            </div>
-            <div class="form-group">
-              <label for="comment-form-name">{{ site.data.ui-text[site.locale].comment_form_name_label | default: "Name" }} <small class="required">*</small></label>
-              <input type="text" id="comment-form-name" name="fields[name]" tabindex="2" />
-            </div>
-            <div class="form-group">
-              <label for="comment-form-email">{{ site.data.ui-text[site.locale].comment_form_email_label | default: "Email address" }} <small class="required">*</small></label>
-              <input type="email" id="comment-form-email" name="fields[email]" tabindex="3" />
-            </div>
-            <div class="form-group">
-              <label for="comment-form-url">{{ site.data.ui-text[site.locale].comment_form_website_label | default: "Website (optional)" }}</label>
-              <input type="url" id="comment-form-url" name="fields[url]" tabindex="4"/>
-            </div>
-
-            <div class="form-group hidden" style="display: none;">
-              <input type="hidden" name="options[slug]" value="{{ page.slug }}">
-              <label for="comment-form-location">Not used. Leave blank if you are a human.</label>
-              <input type="text" id="comment-form-location" name="fields[hidden]" autocomplete="off"/>
-              {% if site.reCaptcha.siteKey %}<input type="hidden" name="options[reCaptcha][siteKey]" value="{{ site.reCaptcha.siteKey }}">{% endif %}
-              {% if site.reCaptcha.secret %}<input type="hidden" name="options[reCaptcha][secret]" value="{{ site.reCaptcha.secret }}">{% endif %}
-            </div>
-
-            <p class="hidden js-notice"><strong class="js-notice-text"></strong></p>
-
-            {% if site.reCaptcha.siteKey %}
-              <div class="form-group">
-                <div class="g-recaptcha" data-sitekey="{{ site.reCaptcha.siteKey }}"></div>
-              </div>
-            {% endif %}
-
-            <div class="form-group">
-              <button type="submit" id="comment-form-submit" tabindex="5" class="btn btn--primary btn--large">{{ site.data.ui-text[site.locale].comment_btn_submit | default: "Submit Comment" }}</button>
-            </div>
-          </form>
-        {% endif %}
-      </div>
-
-    {% when "staticman" %}
-      <div class="page__comments-form">
-        <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comments_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-        {% if site.repository and site.staticman.branch %}
-          <form id="new_comment" class="page__comments-form js-form form" method="post" action="https://api.staticman.net/v1/entry/{{ site.repository }}/{{ site.staticman.branch }}">
-            <!-- (same fields as above - omitted for brevity in copy, but include same inputs as staticman_v2) -->
-            <div class="form-group">
-              <label for="comment-form-message">{{ site.data.ui-text[site.locale].comment_form_comment_label | default: "Comment" }} <small class="required">*</small></label>
-              <textarea type="text" rows="3" id="comment-form-message" name="fields[message]" tabindex="1"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="comment-form-name">{{ site.data.ui-text[site.locale].comment_form_name_label | default: "Name" }} <small class="required">*</small></label>
-              <input type="text" id="comment-form-name" name="fields[name]" tabindex="2" />
-            </div>
-            <div class="form-group">
-              <label for="comment-form-email">{{ site.data.ui-text[site.locale].comment_form_email_label | default: "Email address" }} <small class="required">*</small></label>
-              <input type="email" id="comment-form-email" name="fields[email]" tabindex="3" />
-            </div>
-            <div class="form-group">
-              <button type="submit" id="comment-form-submit" tabindex="5" class="btn btn--primary btn--large">{{ site.data.ui-text[site.locale].comment_btn_submit | default: "Submit Comment" }}</button>
-            </div>
-          </form>
-        {% endif %}
-      </div>
-
-    {% when "utterances" %}
-      <!-- If we already printed existing comments above, use a "Leave a Comment" heading for the widget -->
-      <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comment_form_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-
-      <!-- Utterances comment container -->
-      <section id="utterances-comments"></section>
-
-      <!-- Utterances script (ONLY here) -->
-      <script src="https://utteranc.es/client.js"
-              repo="QiyuZhang-stu/QiyuZhang-stu.github.io"
-              issue-term="pathname"
-              label="Comment"
-              theme="github-light"
-              crossorigin="anonymous"
-              async>
-      </script>
-
-    {% when "giscus" %}
-      <h4 class="page__comments-title">{% if site.data.comments and site.data.comments[page.slug] %}{{ site.data.ui-text[site.locale].comment_form_label | default: "Leave a Comment" }}{% else %}{{ comments_label }}{% endif %}</h4>
-      <section id="giscus-comments"></section>
-
-    {% when "custom" %}
-      {% include /comments-providers/custom.html %}
-  {% endcase %}
-</div>
+</body>
+</html>
