@@ -1,24 +1,19 @@
 <div class="page__comments">
   {% capture comments_label %}{{ site.data.ui-text[site.locale].comments_label | default: "Comments" }}{% endcapture %}
-  <script src="https://utteranc.es/client.js"
-        repo="QiyuZhang-stu/QiyuZhang-stu.github.io"
-        issue-term="pathname"
-        label="Comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
-  
+
   {% case site.comments.provider %}
     {% when "discourse" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
       <section id="discourse-comments"></section>
+
     {% when "disqus" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
       <section id="disqus_thread"></section>
+
     {% when "facebook" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
       <section class="fb-comments" data-href="{{ page.url | absolute_url }}" data-mobile="true" data-num-posts="{{ site.comments.facebook.num_posts | default: 5 }}" data-width="100%" data-colorscheme="{{ site.comments.facebook.colorscheme | default: 'light' }}"></section>
+
     {% when "staticman_v2" %}
       <section id="static-comments">
         {% if site.repository and site.comments.staticman.branch %}
@@ -102,6 +97,7 @@
           {% if site.reCaptcha.siteKey %}<script async src="https://www.google.com/recaptcha/api.js"></script>{% endif %}
         {% endif %}
       </section>
+
     {% when "staticman" %}
       <section id="static-comments">
         {% if site.repository and site.staticman.branch %}
@@ -177,12 +173,26 @@
           <!-- End new comment form -->
         {% endif %}
       </section>
+
     {% when "utterances" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
+      <!-- Utterances comment container -->
       <section id="utterances-comments"></section>
+
+      <!-- Utterances script placed under the Comments heading so it renders in the right spot -->
+      <script src="https://utteranc.es/client.js"
+              repo="QiyuZhang-stu/QiyuZhang-stu.github.io"
+              issue-term="pathname"
+              label="Comment"
+              theme="github-light"
+              crossorigin="anonymous"
+              async>
+      </script>
+
     {% when "giscus" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
       <section id="giscus-comments"></section>
+
     {% when "custom" %}
       {% include /comments-providers/custom.html %}
   {% endcase %}
