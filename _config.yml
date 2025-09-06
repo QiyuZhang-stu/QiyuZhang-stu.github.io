@@ -122,7 +122,7 @@ comments:
   giscus:
     repo: "QiyuZhang-stu/QiyuZhang-stu.github.io"  # 你的博客仓库
     repo_id: "R_kgDOPSl0vg"          # giscus.app 生成
-    category: "General"                           # 你在 discussions 里创建的分类名
+    category: "Announcements"                           # 你在 discussions 里创建的分类名
     category_id: "DIC_kwDOPSl0vs4CvCwv"  # giscus.app 生成
     mapping: "pathname"                           # 建议用 pathname
     reactions_enabled: "1"                        # 开启 GitHub 表情反应
