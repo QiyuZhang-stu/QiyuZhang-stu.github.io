@@ -65,15 +65,11 @@ layout: default
       {% include post_pagination.html %}
     </div>
 
+    {%- comment -%}
+    显示评论区，无论本地或生产环境
+    {%- endcomment -%}
     {% if site.comments.provider and page.comments %}
-      {% if jekyll.environment == 'production' %}
-        {% include comments.html %}
-      {% else %}
-        <p>
-          Comments are configured with provider: <strong>{{ site.comments.provider }}</strong>,
-          but are disabled in non-production environments.
-        </p>
-      {% endif %}
+      {% include comments.html %}
     {% endif %}
   </article>
 
