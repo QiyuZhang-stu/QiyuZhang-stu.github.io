@@ -24,3 +24,19 @@ I'm also a beginner, hoping to make progress together with you.
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]:   https://github.com/jekyll/jekyll
 [jekyll-talk]: https://talk.jekyllrb.com/ -->
+<!-- 临时测试用：直接在文章底部插入 giscus 脚本（确认效果后再移除） -->
+<script src="https://giscus.app/client.js"
+  data-repo="QiyuZhang-stu/QiyuZhang-stu.github.io"
+  data-repo-id="R_kgDOPSl0vg"
+  data-category="General"
+  data-category-id="DIC_kwDOPSl0vs4CvCwv"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="top"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
