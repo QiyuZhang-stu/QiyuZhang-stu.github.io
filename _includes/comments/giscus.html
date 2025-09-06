@@ -1,0 +1,16 @@
+{% assign g = site.comments.giscus %}
+<script src="https://giscus.app/client.js"
+  data-repo="{{ g.repo | default: 'QiyuZhang-stu/QiyuZhang-stu.github.io' }}"
+  data-repo-id="{{ g.repo_id | default: 'R_kgDOPSl0vg' }}"
+  data-category="{{ g.category | default: 'General' }}"
+  data-category-id="{{ g.category_id | default: 'DIC_kwDOPSl0vs4CvCwv' }}"
+  data-mapping="{{ g.mapping | default: 'pathname' }}"
+  data-strict="{{ g.strict | default: '0' }}"
+  data-reactions-enabled="{{ g.reactions_enabled | default: '1' }}"
+  data-emit-metadata="{{ g.emit_metadata | default: '0' }}"
+  data-input-position="{{ g.input_position | default: 'top' }}"
+  data-theme="{{ g.theme | default: 'preferred_color_scheme' }}"
+  data-lang="{{ g.lang | default: 'zh-CN' }}"
+  crossorigin="anonymous"
+  async>
+</script>
