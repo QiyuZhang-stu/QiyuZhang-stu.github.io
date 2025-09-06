@@ -25,3 +25,4 @@ I'm also a beginner, hoping to make progress together with you.
 [jekyll-gh]:   https://github.com/jekyll/jekyll
 [jekyll-talk]: https://talk.jekyllrb.com/ -->
 <!-- 临时测试用：直接在文章底部插入 giscus 脚本（确认效果后再移除） -->
+<script src="https://utteranc.es/client.js" repo="QiyuZhang-stu/QiyuZhang-stu.github.io" issue-term="pathname" label="Comment" theme="github-light" crossorigin="anonymous" async> </script>
