@@ -1,5 +1,14 @@
 <div class="page__comments">
   {% capture comments_label %}{{ site.data.ui-text[site.locale].comments_label | default: "Comments" }}{% endcapture %}
+  <script src="https://utteranc.es/client.js"
+        repo="QiyuZhang-stu/QiyuZhang-stu.github.io"
+        issue-term="pathname"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+  
   {% case site.comments.provider %}
     {% when "discourse" %}
       <h4 class="page__comments-title">{{ comments_label }}</h4>
