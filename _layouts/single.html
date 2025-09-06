@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div id="main" role="main">
+  {% include sidebar.html %}
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <header>
+      <h1 class="page__title" itemprop="headline">{{ page.title }}</h1>
+      {% if page.read_time %}
+        <p class="page__meta">预计阅读时间：{{ page.read_time }} 分钟</p>
+      {% endif %}
+    </header>
+
+    <section class="page__content" itemprop="text">
+      {{ content }}
+    </section>
+
+    {% if page.comments %}
+      {% include comments.html %}
+    {% endif %}
+
+  </article>
+</div>
