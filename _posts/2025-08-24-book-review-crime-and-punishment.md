@@ -70,3 +70,8 @@ GPT有一点和我的感受是相同的--陀思妥耶夫斯基的世界观是有
 其实到此，我基本上已经能猜出本书后续的发展走向了。拉斯克尔尼科夫在经过内心的忏悔后，必然会自首，接受法律的惩罚，最终在索尼娅（为什么是索尼娅？陀翁在前面多次提到索尼娅绝非闲笔，加之联想到托翁《复活》的套路，大胆猜测一下）的爱的陪伴与感化中，获得灵魂的救赎。
 
 （对我而言，或许本书真正的阅读已然结束。再次感叹一下陀翁描写人“癫狂”状态如此传神，不会是真吸了吧bushi 另外，还有一点收获就是阅读时有人（硅基生命也是生命X）实时交流确实会有很大的收获，GPT真乃神器也😋）
+
+
+
+
+<script src="https://utteranc.es/client.js" repo="QiyuZhang-stu/QiyuZhang-stu.github.io" issue-term="pathname" label="Comment" theme="github-light" crossorigin="anonymous" async> </script>
