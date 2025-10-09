@@ -81,6 +81,7 @@ collections:
     output: true             # 把 collection 文档渲染为独立页面
     permalink: /diary/:name/ # URL 格式，:name 对应文件名（不含扩展名）
 
+
 defaults:
   # _posts
   - scope:
