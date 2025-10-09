@@ -76,6 +76,11 @@ footer:
       icon: "fab fa-fw fa-instagram"
       url: "https://instagram.com/"
 
+collections:
+  diary:
+    output: true             # 把 collection 文档渲染为独立页面
+    permalink: /diary/:name/ # URL 格式，:name 对应文件名（不含扩展名）
+
 defaults:
   # _posts
   - scope:
@@ -96,6 +101,16 @@ defaults:
       layout: single
       author_profile: true
       comments: true   # 👈 让页面也支持评论
+  - scope:
+      path: ""
+      type: diary
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      search: false    
+      sitemap: false   
 
 category_archive:
   type: liquid
